@@ -20,8 +20,11 @@ dist/
 data/
 server/data/
 
-# 前端构建产物（由 web/ 的 npm run build 生成，不入库）
-server/app/static/
+# 前端构建产物：这里**故意提交**（server/app/static）
+# 因为 Render 的 Python runtime 没有 Node，构建阶段跑不了 vite；
+# 本机没装 Docker，多阶段 Docker 方案无法验证。取舍说明见 docs/deploy.md。
+# 若改用 Docker/CI 构建，把下面这行打开即可：
+# server/app/static/
 
 # 内部工作文档（面试交付时删除；含追问预案等自用内容）
 # docs/notes/

@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: leadcatcher
+    runtime: python
+    plan: free
+    region: singapore
+    branch: main
+    autoDeploy: true
+
+    # 前端构建产物已随仓库提交（server/app/static），所以构建阶段只装 Python 依赖。
+    # 原因见 docs/deploy.md「关于提交构建产物」。
+    buildCommand: pip install --upgrade pip && pip install -r server/requirements.txt
+
+    # seed 是幂等的：库里已有数据就跳过。免费实例每次重启磁盘会清空，正好自动重灌演示数据。
+    startCommand: cd server && python seed.py && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /api/health
+
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      # 以下两项在 Render 创建 Blueprint 时会提示你填写；留空也能跑（自动降级为规则引擎）
+      - key: LLM_API_KEY
+        sync: false
+      - key: ADMIN_TOKEN
+        sync: false
+      - key: LLM_BASE_URL
+        value: https://api.deepseek.com
+      - key: LLM_MODEL
+        value: deepseek-chat
+      - key: PROMPT_VERSION
+        value: v2
+
+    # 需要「重启不丢数据」时，升级到付费实例后取消下面三行注释：
+    # disk:
+    #   name: leadcatcher-data
+    #   mountPath: /opt/render/project/src/server/data
+    #   sizeGB: 1

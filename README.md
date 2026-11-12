@@ -68,7 +68,10 @@ npm run dev                     # http://localhost:5173 ，API 自动代理到 8
 ```
 
 **单服务部署**：`cd web && npm run build` 会把产物输出到 `server/app/static`，
-此后只要启动 FastAPI，`http://127.0.0.1:8000` 就是完整应用（Render / Railway 一条命令部署）。
+此后只要启动 FastAPI，`http://127.0.0.1:8000` 就是完整应用。
+
+**公网部署**：仓库内置 `render.yaml`（Render Blueprint），GitHub 授权后
+**New + → Blueprint → 选本仓库** 即可，步骤与坑见 [部署说明](docs/deploy.md)。
 
 ```bash
 # 3) 评测
@@ -134,6 +137,7 @@ leadcatcher/
 | [Prompt 库](docs/prompts/prompts.md) | 提取 / 复判 / 归因聚类三个 Prompt + 版本记录 |
 | [测试集](docs/eval/) | 30 条标注样本 + 判定口径 |
 | [复盘记录](docs/retro/v1.md) | 第 1 轮迭代：跑分、改了什么、踩了什么坑 |
+| [部署说明](docs/deploy.md) | Render 一键部署、免费实例限制、产物提交的取舍 |
 | [原型截图](docs/prototype/) | 看板 / 录入 / 大盘 / 详情 / 纠错 |
 
 ## 进度
